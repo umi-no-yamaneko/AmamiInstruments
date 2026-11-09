@@ -295,7 +295,7 @@ namespace Yamaneko.AmamiInstruments.Editor
             if (target == null || !target.transform.IsChildOf(instance.transform))
                 throw new InvalidOperationException("楽器プレハブの表示対象参照を確認してください。");
             var menu = instance.GetComponent<ModularAvatarMenuItem>();
-            var customization = entry != null ? (entry.menuSource_otherObjectChildren != null ? entry.menuSource_otherObjectChildren : destination) :
+            var customization = entry != null && entry.menuSource_otherObjectChildren != null ? entry.menuSource_otherObjectChildren :
                 menu != null && menu.menuSource_otherObjectChildren != null ? menu.menuSource_otherObjectChildren : instance;
             var label = entry != null ? entry.label : prefab.name;
             var instrumentCategory = entry != null ? InstrumentProtocol.Identity(entry)[1] : "";
@@ -617,7 +617,8 @@ namespace Yamaneko.AmamiInstruments.Editor
                 .Any(x => InstrumentProtocol.Parameter(x) == InstrumentProtocol.Root))
                 throw new InvalidOperationException("共通設定を含まない、登録楽器が1つのプレハブを指定してください。");
             var dependencies = AssetDatabase.GetDependencies(AssetDatabase.GetAssetPath(prefab), true);
-            if (dependencies.Any(p => p.StartsWith(CorePath, StringComparison.Ordinal) ||
+            if (dependencies.Any(p => p.StartsWith(CorePath + "/", StringComparison.Ordinal) ||
+                p.StartsWith("Packages/com.umi-no-yamaneko.amami-instruments/", StringComparison.Ordinal) ||
                 p.Contains("/Global/Animations/") || p.EndsWith("/InstrumentsSelector.controller", StringComparison.Ordinal)))
                 throw new InvalidOperationException("旧共通FXへの依存が残っています。共通制御を移行してから出力してください。");
             var paths = dependencies.Where(p => p.StartsWith("Assets/", StringComparison.Ordinal)).ToArray();
