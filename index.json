@@ -65,6 +65,26 @@
             "nadena.dev.ndmf": ">=1.14.4 <2.0.0"
           },
           "zipSHA256": "ab91615bc8f1b604d6abbc1b0d9eae673902892a0e65b755f3660d8202d0a370"
+        },
+        "1.0.3": {
+          "name": "com.umi-no-yamaneko.amami-instruments",
+          "displayName": "Amami Instruments",
+          "version": "1.0.3",
+          "unity": "2022.3",
+          "description": "VRChat avatar instrument setup and build tools.",
+          "author": {
+            "name": "umi-no-yamaneko",
+            "email": "umi-no-yamaneko@users.noreply.github.com",
+            "url": "https://github.com/umi-no-yamaneko"
+          },
+          "license": "Apache-2.0",
+          "url": "https://raw.githubusercontent.com/umi-no-yamaneko/AmamiInstruments/main/Packages/com.umi-no-yamaneko.amami-instruments-1.0.3.zip",
+          "vpmDependencies": {
+            "com.vrchat.avatars": "3.10.x",
+            "nadena.dev.modular-avatar": ">=1.18.1 <2.0.0",
+            "nadena.dev.ndmf": ">=1.14.4 <2.0.0"
+          },
+          "zipSHA256": "74ae78cbdc31c4120c9c7c0edc1b310eb72080a1f39e9e20228ae6f2f6b57d78"
         }
       }
     }

@@ -319,20 +319,16 @@ namespace Yamaneko.AmamiInstruments.Editor
                 var source = entry.menuSource_otherObjectChildren;
                 if (source == null && owner != null && owner.MenuSource == SubmenuSource.Children)
                     source = owner.menuSource_otherObjectChildren != null ? owner.menuSource_otherObjectChildren : owner.gameObject;
-                // Older installs point every instrument at the same placement Settings.
-                // Resolve its individual child before deduplicating customization pages.
-                if (source != null && source.transform.parent == layout.Container.transform &&
-                    target != source && target.transform.IsChildOf(source.transform))
+                // A placement Settings can contain multiple products. Route through
+                // the instrument that owns the registration, even when the display
+                // target is a nested mesh or the placement hierarchy is wrapped.
+                var productRoot = entry.transform.parent;
+                if (productRoot.name == "__AmamiInstrumentRegistration") productRoot = productRoot.parent;
+                if (source != null && productRoot != null && source.transform != productRoot &&
+                    productRoot.IsChildOf(source.transform) && target.transform.IsChildOf(productRoot))
                 {
-                    var product = target.transform;
-                    while (product.parent != source.transform) product = product.parent;
-                    if (entry.transform.IsChildOf(product))
-                    {
-                        if (owner != null && !owner.transform.IsChildOf(product)) owner = null;
-                        var localSource = owner != null ? owner.menuSource_otherObjectChildren : null;
-                        source = localSource != null && localSource.transform.IsChildOf(product)
-                            ? localSource : product.gameObject;
-                    }
+                    source = productRoot.gameObject;
+                    if (owner != null && !owner.transform.IsChildOf(productRoot)) owner = null;
                 }
                 if (source != null && HasCustomization(source))
                 {

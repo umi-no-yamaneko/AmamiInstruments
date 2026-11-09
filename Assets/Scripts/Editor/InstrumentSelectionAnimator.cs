@@ -320,7 +320,10 @@ namespace Yamaneko.AmamiInstruments.Editor
             entry.Control.value = slot;
             entry.automaticValue = false;
             entry.label = label;
-            entry.menuSource_otherObjectChildren = settings;
+            // The placement Settings is a shared parent. Menu controls for this
+            // instrument live inside the product that was just imported.
+            entry.menuSource_otherObjectChildren = settings != null && root.transform.IsChildOf(settings.transform)
+                ? root : settings;
             InstrumentProtocol.FlattenRegistrationFolders(root, true);
             InstrumentProtocol.SeparateRegistration(entry);
             var toggle = entry.GetComponent<ModularAvatarObjectToggle>();
